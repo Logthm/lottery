@@ -310,13 +310,11 @@ object Lottery : KotlinPlugin(
                                                     "---"
                                         )
                                     }
-                                }  else {
-                                    builder.add("抽奖列表为空")
                                 }
                             }
-                        } else {
-                            builder.add("抽奖列表为空")
                         }
+                        if (builder.isEmpty())
+                            builder.add("抽奖列表为空")
                         val msg = builder.build()
                         group.sendMessage(msg)
                     }
