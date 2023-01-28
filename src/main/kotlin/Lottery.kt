@@ -299,10 +299,12 @@ object Lottery : KotlinPlugin(
                     if (message.contentToString().startsWith(Settings.list_lottery)) {
                         val sdf: Format = SimpleDateFormat("yyyy-MM-dd hh:mm")
                         val builder = MessageChainBuilder()
+                        var hasLot = false
                         if (lotteryFolder.listFiles().isNotEmpty()) {
                             for (file in lotteryFolder.listFiles()!!) {
                                 val temp = fileToData(file)
                                 if (temp.group == group.id) {
+                                    hasLot = true
                                     val currentDateTime = LocalDateTime.now()
                                     val endDateTime =
                                         LocalDateTime.ofInstant(temp.endTime.toInstant(), ZoneId.systemDefault())
@@ -325,7 +327,7 @@ object Lottery : KotlinPlugin(
                                 }
                             }
                         }
-                        if (builder.isEmpty())
+                        if (!hasLot)
                             builder.add("抽奖列表为空")
                         val msg = builder.build()
                         group.sendMessage(msg)
