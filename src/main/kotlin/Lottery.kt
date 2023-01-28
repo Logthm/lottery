@@ -166,6 +166,13 @@ object Lottery : KotlinPlugin(
                                 waitForDeleteImgIdList.add(id)
                                 return@subscribeAlways
                             }
+                            val currentDateTime = LocalDateTime.now()
+                            val endDateTime = LocalDateTime.ofInstant(endTime.toInstant(), ZoneId.systemDefault())
+                            if (currentDateTime.isAfter(endDateTime)) {
+                                group.sendMessage("截止时间不能早于现在时间，请重新创建！")
+                                waitForDeleteImgIdList.add(id)
+                                return@subscribeAlways
+                            }
 
                             group.sendMessage("请在30秒内发送该抽奖的抽选类型（仅回复数字）\n0：中奖人可重复 1：中奖人不可重复\n（中奖人不可重复时，若参与人数小于奖品数，将在覆盖每一个人的前提下产生重复中奖）")
                             val message3: String = selectMessages {
@@ -268,6 +275,11 @@ object Lottery : KotlinPlugin(
                             if (f.isFile) {
                                 val temp = fileToData(f)
 
+                                if (group.id != temp.group) {
+                                    group.sendMessage("参数错误！")
+                                    return@subscribeAlways
+                                }
+
                                 if (sender.id == Config.adminQQ || sender.id == temp.creator) {
                                     f.delete()
                                     deleteImg(temp.lotId, imgFolder)
@@ -329,6 +341,12 @@ object Lottery : KotlinPlugin(
                             val id = message.contentToString().removePrefix(Settings.list_lottery_members + " ")
                             val temp = fileToData(f)
                             val builder = MessageChainBuilder()
+
+                            if (group.id != temp.group) {
+                                group.sendMessage("参数错误！")
+                                return@subscribeAlways
+                            }
+
                             if (temp.members.size > 0) {
                                 builder.add("抽奖 $id 的参与名单如下：\n")
                                 for (memberID in temp.members) {
@@ -358,6 +376,12 @@ object Lottery : KotlinPlugin(
                             val currentDateTime = LocalDateTime.now()
                             val endDateTime =
                                 LocalDateTime.ofInstant(temp.endTime.toInstant(), ZoneId.systemDefault())
+
+                            if (group.id != temp.group) {
+                                group.sendMessage("参数错误！")
+                                return@subscribeAlways
+                            }
+
                             if (currentDateTime.isAfter(endDateTime)) {
                                 builder.add("[已结束]\n")
                                 builder.add("抽奖编号：$id\n")
@@ -455,6 +479,12 @@ object Lottery : KotlinPlugin(
                             val currentDateTime = LocalDateTime.now()
                             val endDateTime = LocalDateTime.ofInstant(temp.endTime.toInstant(), ZoneId.systemDefault())
                             val builder = MessageChainBuilder()
+
+                            if (group.id != temp.group) {
+                                group.sendMessage("参数错误！")
+                                return@subscribeAlways
+                            }
+
                             if (currentDateTime.isAfter(endDateTime)) {
                                 builder.add("抽奖已结束，无法加入")
                             } else if (temp.members.contains(sender.id.toString())) {
@@ -489,6 +519,12 @@ object Lottery : KotlinPlugin(
                             val currentDateTime = LocalDateTime.now()
                             val endDateTime = LocalDateTime.ofInstant(temp.endTime.toInstant(), ZoneId.systemDefault())
                             val builder = MessageChainBuilder()
+
+                            if (group.id != temp.group) {
+                                group.sendMessage("参数错误！")
+                                return@subscribeAlways
+                            }
+
                             if (currentDateTime.isAfter(endDateTime)) {
                                 builder.add("抽奖已结束")
                             } else if (temp.members.contains(sender.id.toString())) {
@@ -522,6 +558,12 @@ object Lottery : KotlinPlugin(
                         if (f.exists()) {
                             val temp = fileToData(f)
                             val currentDateTime = LocalDateTime.now()
+
+                            if (group.id != temp.group) {
+                                group.sendMessage("参数错误！")
+                                return@subscribeAlways
+                            }
+
                             if (sender.id == Config.adminQQ || sender.id == temp.creator) {
                                 // 将抽奖结束时间设为当前时间且禁用结束前提示
                                 val newTemp = Lot(

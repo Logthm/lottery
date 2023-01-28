@@ -25,6 +25,7 @@ class LotTask(private val lotteryFolder: File, private val imgFolder: File, priv
                         val endDateTime = LocalDateTime.ofInstant(temp.endTime.toInstant(), ZoneId.systemDefault())
                         val bot = Bot.getInstance(Config.botQQ)
                         val g = bot.getGroup(temp.group)
+
                         // 截止抽奖并开奖
                         if (!temp.isEnd && currentDateTime.isAfter(endDateTime)) {
                             val builder = MessageChainBuilder()
@@ -79,7 +80,7 @@ class LotTask(private val lotteryFolder: File, private val imgFolder: File, priv
                             g?.sendMessage(msg)
                         }
                         // 提示抽奖即将结束
-                        if (!temp.hasRemind && currentDateTime.isAfter(endDateTime.minusHours(Config.remind_hour))) {
+                        if (!temp.hasRemind && !temp.isEnd && currentDateTime.isAfter(endDateTime.minusHours(Config.remind_hour))) {
 
                             withContext(Dispatchers.IO) {
                                 FileWriter(lotteryFolder.path + "/" + temp.lotId + ".json")
