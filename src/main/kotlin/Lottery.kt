@@ -192,7 +192,7 @@ object Lottery : KotlinPlugin(
                                 waitForDeleteImgIdList.add(id)
                                 return@subscribeAlways
                             }
-                            
+
 //                            group.sendMessage("请在30秒内发送该抽奖的奖品数量（仅回复数字）")
 //                            val message4: String = selectMessages {
 //                                has<PlainText> { message.contentToString() }
@@ -216,12 +216,11 @@ object Lottery : KotlinPlugin(
                             try {
                                 message4.split("\n").forEach {
                                     var prizeNum: Int
-                                    val  prizeContent: String
+                                    val prizeContent: String
                                     if (it.matches(Regex("^.+\\*[0-9]+$"))) {
                                         prizeNum = it.substring(it.lastIndexOf("*") + 1).toInt()
-                                        prizeContent = it.substring(0,it.lastIndexOf("*"))
-                                    }
-                                    else {
+                                        prizeContent = it.substring(0, it.lastIndexOf("*"))
+                                    } else {
                                         prizeNum = 1
                                         prizeContent = it
                                     }

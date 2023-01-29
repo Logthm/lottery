@@ -17,12 +17,14 @@ object Config : AutoSavePluginConfig("config") {
     val adminQQ: Long by value<Long>(123123123)
     val botQQ: Long by value<Long>(123456789)
     val whiteGroupList: MutableList<Long> by value(mutableListOf(123456789))
+
     // 非 adminQQ 是否可以创建抽奖
     val enable_for_others: Boolean by value(false)
 
 
     // 抽奖结束后，保留的时间
     val remain_hour: Long by value(Settings.remain_hour)
+
     // 在抽奖截止前多久进行提醒
     val remind_hour: Long by value(Settings.remind_hour)
 

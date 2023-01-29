@@ -14,7 +14,11 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 
-class LotTask(private val lotteryFolder: File, private val imgFolder: File, private val waitForDeleteImgIdList: MutableList<Int>) : TimerTask() {
+class LotTask(
+    private val lotteryFolder: File,
+    private val imgFolder: File,
+    private val waitForDeleteImgIdList: MutableList<Int>
+) : TimerTask() {
     override fun run() {
         runBlocking {
             try {

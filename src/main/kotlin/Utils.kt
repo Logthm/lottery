@@ -40,7 +40,7 @@ fun getExtension(url: URL): String {
     }
     fin.close()
 
-        return if (b[0] == 'G'.code && b[1] == 'I'.code && b[2] == 'F'.code)
+    return if (b[0] == 'G'.code && b[1] == 'I'.code && b[2] == 'F'.code)
         ".gif"
     else if (b[6] == 'J'.code && b[7] == 'F'.code && b[8] == 'I'.code && b[9] == 'F'.code)
         ".jpg"
