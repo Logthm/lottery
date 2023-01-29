@@ -2,6 +2,10 @@
 
 > 便捷的qq群抽奖插件
 
+
+[![Downloads](https://img.shields.io/github/downloads/Logthm/lottery/total)](https://github.com/Logthm/lottery/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Logthm/lottery?display_name=tag)](https://github.com/Logthm/lottery/releases)
+
 ## 功能
 
 ### 帮助指令
