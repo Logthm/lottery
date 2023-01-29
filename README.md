@@ -50,3 +50,10 @@
 | remain_hour       | 抽奖结束后，保留的时间（小时）                               |
 | remind_hour       | 在抽奖截止前多久进行提醒（小时）                             |
 
+## 安装
+
+* 运行 [Mirai Console](https://github.com/mamoe/mirai-console) 生成 `plugins` 文件夹
+* 从 [Releases](https://github.com/Logthm/lottery/releases/latest) 下载 `jar` 并将其放入 `plugins` 文件夹中
+* 启动 [Mirai Console](https://github.com/mamoe/mirai-console) 后关闭。第一次运行后，会自动生成配置文件以及存储文件
+* 在 `./config/com.logs.lottery/config.yml` 填写各配置项
+* 再次启动 [Mirai Console](https://github.com/mamoe/mirai-console) 即可使用
