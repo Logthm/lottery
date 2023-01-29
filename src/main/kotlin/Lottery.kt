@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.console.plugin.jvm.reloadPluginConfig
+import net.mamoe.mirai.contact.isOperator
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.globalEventChannel
@@ -74,7 +75,7 @@ object Lottery : KotlinPlugin(
             // 实现指令
             globalEventChannel().subscribeAlways<GroupMessageEvent> {
                 // 群内管理员消息
-                if (sender.id == Config.adminQQ) {
+                if (sender.id == Config.adminQQ || sender.permission.isOperator()) {
                     if (message.contentEquals(Settings.enable_lottery)) {
                         if (Config.whiteGroupList.contains(group.id)) {
                             group.sendMessage("该功能已在该群启用，无需重复启用")
@@ -280,7 +281,7 @@ object Lottery : KotlinPlugin(
                                     return@subscribeAlways
                                 }
 
-                                if (sender.id == Config.adminQQ || sender.id == temp.creator) {
+                                if (sender.id == Config.adminQQ || sender.id == temp.creator || sender.permission.isOperator()) {
                                     f.delete()
                                     deleteImg(temp.lotId, imgFolder)
                                     group.sendMessage("删除成功")
@@ -352,7 +353,7 @@ object Lottery : KotlinPlugin(
                             if (temp.members.size > 0) {
                                 builder.add("抽奖 $id 的参与名单如下：\n")
                                 for (memberID in temp.members) {
-                                    builder.add(memberID + "\n")
+                                    builder.add("${group.get(memberID.toLong())?.nameCardOrNick}($memberID)\n")
                                 }
                             } else {
                                 builder.add("抽奖 $id 暂时无人参与\n")
@@ -566,7 +567,7 @@ object Lottery : KotlinPlugin(
                                 return@subscribeAlways
                             }
 
-                            if (sender.id == Config.adminQQ || sender.id == temp.creator) {
+                            if (sender.id == Config.adminQQ || sender.id == temp.creator || sender.permission.isOperator()) {
                                 // 将抽奖结束时间设为当前时间且禁用结束前提示
                                 val newTemp = Lot(
                                     temp.lotId,
