@@ -416,7 +416,7 @@ object Lottery : KotlinPlugin(
                                 }
 
                                 if (temp.winners.size > 0) {
-                                    builder.add("中奖名单：\n")
+                                    builder.add("\n中奖名单：\n")
                                     val winnerIndex = 0
                                     for (map in temp.prize) {
                                         builder.add(map.key + "：\n")
