@@ -72,6 +72,7 @@ object Lottery : KotlinPlugin(
         val waitForDeleteImgIdList = mutableListOf<Int>()
 
         launch {
+            // TODO: 查询版本号指令
             // 实现指令
             globalEventChannel().subscribeAlways<GroupMessageEvent> {
                 // 群内管理员消息
