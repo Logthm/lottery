@@ -314,7 +314,7 @@ object Lottery : KotlinPlugin(
                                             "抽奖编号：${temp.lotId}\n" +
                                                     "创建人：${group.get(temp.creator)?.nameCardOrNick}(${temp.creator})\n" +
                                                     "截止日期：${sdf.format(temp.endTime)}\n" +
-                                                    "---"
+                                                    "---\n"
                                         )
                                     } else {
                                         builder.add(
@@ -322,7 +322,7 @@ object Lottery : KotlinPlugin(
                                                     "抽奖编号：${temp.lotId}\n" +
                                                     "创建人：${group.get(temp.creator)?.nameCardOrNick}(${temp.creator})\n" +
                                                     "截止日期：${sdf.format(temp.endTime)}\n" +
-                                                    "---"
+                                                    "---\n"
                                         )
                                     }
                                 }
