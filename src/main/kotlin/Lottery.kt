@@ -7,8 +7,10 @@ import kotlinx.coroutines.withContext
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.console.plugin.jvm.reloadPluginConfig
+import net.mamoe.mirai.contact.Friend
 import net.mamoe.mirai.contact.isOperator
 import net.mamoe.mirai.contact.nameCardOrNick
+import net.mamoe.mirai.event.events.FriendMessageEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.event.selectMessages
@@ -33,7 +35,7 @@ object Lottery : KotlinPlugin(
     JvmPluginDescription(
         id = "com.logs.lottery",
         name = "lottery",
-        version = "0.1.0",
+        version = "0.1.1",
     ) {
         author("Logs")
     }
@@ -72,8 +74,13 @@ object Lottery : KotlinPlugin(
         val waitForDeleteImgIdList = mutableListOf<Int>()
 
         launch {
-            // TODO: 查询版本号指令
+            // TODO: 私聊 join / quit 功能
             // 实现指令
+            globalEventChannel().subscribeAlways<FriendMessageEvent> {
+                if (message.contentEquals("/lot version"))
+                    friend.sendMessage(Lottery.description.version.toString())
+            }
+
             globalEventChannel().subscribeAlways<GroupMessageEvent> {
                 // 群内管理员消息
                 if (sender.id == Config.adminQQ || sender.permission.isOperator()) {
